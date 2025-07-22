@@ -14,10 +14,14 @@ steps:
       packageType: sdk
       version: "6.x"
 
-  - task: Npm@1
-    displayName: "Run npm install"
+  - task: NodeTool@0
     inputs:
-      verbose: false
+      versionSpec: "14.x" # or 16.x if needed
+    displayName: "Install Node.js"
+
+  - script: |
+      npm install -g npm@6
+    displayName: "Downgrade NPM to v6"
 
   - script: "./node_modules/.bin/node-sass Tailspin.SpaceGame.Web/wwwroot --output Tailspin.SpaceGame.Web/wwwroot"
     displayName: "Compile Sass assets"
