@@ -23,6 +23,10 @@ steps:
       npm install -g npm@6
     displayName: "Downgrade NPM to v6"
 
+  - script: |
+      npm install --legacy-peer-deps
+    displayName: "Run npm install"
+
   - script: "./node_modules/.bin/node-sass Tailspin.SpaceGame.Web/wwwroot --output Tailspin.SpaceGame.Web/wwwroot"
     displayName: "Compile Sass assets"
 
