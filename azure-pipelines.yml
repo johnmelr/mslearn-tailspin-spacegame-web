@@ -10,6 +10,17 @@ variables:
   dotnetSdkVersion: "8.0.x"
 
 steps:
+  - task: AdvancedSecurity-Codeql-Init@1
+    displayName: Initialize CodeQL
+    inputs:
+      # build mode `none` is supported for C# but build mode `none` is NOT supported for Swift
+      # so this pipeline definition will result in a failed run
+      languages: "csharp, swift"
+      buildtype: "none"
+
+  - task: AdvancedSecurity-Codeql-Analyze@1
+    displayName: Perform CodeQL Analysis
+
   - task: UseDotNet@2
     displayName: "Use .NET SDK $(dotnetSdkVersion)"
     inputs:
