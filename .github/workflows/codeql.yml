@@ -93,7 +93,8 @@ jobs:
         with:
           dotnet-version: "8.0.x"
 
-      - name: Check if Program.cs is compiled
+      - if: matrix.language == 'csharp'
+        name: Check if Program.cs is compiled
         run: |
           grep -r "Program" ./Tailspin.SpaceGame.Web/bin
 
