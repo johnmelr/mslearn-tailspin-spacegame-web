@@ -102,7 +102,7 @@ jobs:
         name: Restore and Build C# Project
         run: |
           dotnet restore
-          dotnet build Tailspin.SpaceGame.Web.sln
+          dotnet build Tailspin.SpaceGame.Web/Tailspin.SpaceGame.Web.csproj --configuration Release
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
