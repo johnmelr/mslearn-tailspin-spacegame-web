@@ -98,6 +98,10 @@ jobs:
         run: |
           dotnet restore
           dotnet build Tailspin.SpaceGame.Web.sln
+      
+      - name: Check if Program.cs is compiled
+        run: |
+        grep -r "Program" ./Tailspin.SpaceGame.Web/bin
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
