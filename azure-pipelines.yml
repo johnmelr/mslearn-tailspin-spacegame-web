@@ -10,6 +10,15 @@ variables:
   dotnetSdkVersion: "8.0.x"
 
 steps:
+  - task: AdvancedSecurity-Codeql-Init@1
+    displayName: Initialize CodeQL
+    inputs:
+      languages: "csharp"
+      buildtype: "none"
+
+  - task: AdvancedSecurity-Codeql-Analyze@1
+    displayName: Perform CodeQL Analysis
+
   - task: UseDotNet@2
     displayName: "Use .NET SDK $(dotnetSdkVersion)"
     inputs:
