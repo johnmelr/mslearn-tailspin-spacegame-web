@@ -46,7 +46,7 @@ jobs:
           - language: actions
             build-mode: none
           - language: csharp
-            build-mode: autobuild
+            build-mode: manual
           - language: javascript-typescript
             build-mode: none
         # CodeQL supports the following values keywords for 'language': 'actions', 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'rust', 'swift'
@@ -87,15 +87,22 @@ jobs:
       # to build your code.
       # ℹ️ Command-line programs to run using the OS shell.
       # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
-      - if: matrix.build-mode == 'manual'
-        shell: bash
+      - if: matrix.language == 'csharp'
+        name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "8.0.x"
+
+      - if: matrix.language == 'csharp'
+        name: Restore and Build C# Project
         run: |
-          echo 'If you are using a "manual" build mode for one or more of the' \
-            'languages you are analyzing, replace this with the commands to build' \
-            'your code, for example:'
-          echo '  make bootstrap'
-          echo '  make release'
-          exit 1
+          dotnet restore
+          dotnet build Tailspin.SpaceGame.Web/Tailspin.SpaceGame.Web.csproj --configuration Release
+
+      - if: matrix.language == 'csharp'
+        name: Check if Program.cs is compiled
+        run: |
+          grep -r "Program" ./Tailspin.SpaceGame.Web/bin
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3

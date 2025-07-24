@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using System;
 using System.Diagnostics;
 
 namespace TailSpin.SpaceGame.Web
@@ -8,9 +9,9 @@ namespace TailSpin.SpaceGame.Web
     {
         public static void Main(string[] args)
         {
-             // Simulate tainted input (e.g., from user input)
-            string userInput = args.Length > 0 ? args[0] : "ls";
-            Process.Start("bash", "-c \"" + userInput + "\"");  // ⚠️ Should trigger CodeQL command injection
+            Console.Write("Enter a command: ");
+            string input = Console.ReadLine(); // ✅ Known taint source
+            Process.Start("bash", "-c \"" + input + "\""); // ✅ Known sink
 
             CreateWebHostBuilder(args).Build().Run();
         }
