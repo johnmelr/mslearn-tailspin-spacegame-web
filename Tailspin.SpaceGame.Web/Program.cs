@@ -8,9 +8,9 @@ namespace TailSpin.SpaceGame.Web
     {
         public static void Main(string[] args)
         {
-            // ⚠️ Dangerous hardcoded command (should trigger command injection alert)
-            string cmd = "rm -rf /";  // For *nix or WSL environments
-            Process.Start("bash", "-c \"" + cmd + "\"");
+             // Simulate tainted input (e.g., from user input)
+            string userInput = args.Length > 0 ? args[0] : "ls";
+            Process.Start("bash", "-c \"" + userInput + "\"");  // ⚠️ Should trigger CodeQL command injection
 
             CreateWebHostBuilder(args).Build().Run();
         }
